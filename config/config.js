@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 
 const environment = "dev"; // It will be dynamic by reading system environment variable
 const envPath = path.join(__dirname, `./environments/.${environment}.env`);
-console.log("EnvPath", envPath);
 dotenv.config({
   path: envPath,
 });
