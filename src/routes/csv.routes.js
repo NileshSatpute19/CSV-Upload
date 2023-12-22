@@ -11,6 +11,6 @@ const {
 
 router.get("/list-files", main);
 router.post("/upload", upload.single("csv"), fileUploads);
-router.get("/view-data", displayCSVData);
+router.get("/view-data/:name", displayCSVData);
 
 module.exports = router;

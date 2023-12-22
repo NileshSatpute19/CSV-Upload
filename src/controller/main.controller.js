@@ -1,6 +1,9 @@
 const path = require("path");
 const fs = require("fs");
-const { getUploadedFiles } = require("../subscribers/files.subscriber");
+const {
+  getUploadedFiles,
+  readCsvFile,
+} = require("../subscribers/files.subscriber");
 
 const main = async (req, res, next) => {
   try {
@@ -18,11 +21,11 @@ const main = async (req, res, next) => {
 
 const fileUploads = (req, res, next) => {
   try {
-    const oldPath = req.file.path;
+    const oldPath = req.file && req.file.path ? req.file.path : "";
     const newPath = path.join(
       __dirname,
       "../../uploads",
-      req.file.originalname
+      `${Date.now()}_${req.file.originalname}`
     );
     fs.renameSync(oldPath, newPath);
     return res.redirect("/list-files");
@@ -33,10 +36,15 @@ const fileUploads = (req, res, next) => {
 
 const displayCSVData = async (req, res, next) => {
   try {
+    const results = await readCsvFile(req.params.name);
+    if (results.error) {
+      res.status(500).send("technical error");
+    }
     res.render("viewdata", {
       view: "csv-view",
       title: "CSV Uploader by nilesh",
-      data: null,
+      headers: Object.keys(results.data[0]),
+      content: results.data,
     });
     return next();
   } catch (error) {
