@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav hidden-xs">
+      <h1>CSV search</h1>
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="search">Search in CSV file:</label>
+          <input type="input" class="form-control-file" id="search" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      <br />
+    </div>
+    <br />
+    <div class="col-sm-9">
+      <div class="table-wrapper">
+        <table id="csvtbl">
+          <thead>
+            <tr>
+              <% headers.forEach(function(cell, index) { %>
+              <th id="csvheader" data-order="desc"><%= cell %></th>
+              <% }); %>
+
+              <!-- <th>1950</th>
+              <th>1955</th>
+              <th>%</th>
+              <th>1960</th>
+              <th>%</th>
+              <th>1965</th>
+              <th>%</th>
+              <th>1970</th>
+              <th>%</th>
+              <th>1975</th>
+              <th>%</th>
+              <th>1980</th>
+              <th>%</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <% content.forEach(function(cell, index) { %>
+            <tr>
+              <% let csvdata = Object.keys(cell) %> <% for(let itr of csvdata) {
+              %>
+              <td>
+                <span>
+                  <span class="fi fi-af"></span>
+                </span>
+                <span><%= cell[itr] %></span>
+              </td>
+              <% }; %>
+            </tr>
+            <% }); %>
+            <!-- <td>
+                <span>
+                  <span class="fi fi-af"></span>
+                </span>
+                <span>Afghanistan</span>
+              </td>
+              <td>8,151</td>
+              <td>8,892</td>
+              <td>1.76</td>
+              <td>9,830</td>
+              <td>2.03</td>
+              <td>10,998</td>
+              <td>2.27</td>
+              <td>12,431</td>
+              <td>2.48</td>
+              <td>14,133</td>
+              <td>2.60</td>
+              <td>15,045</td>
+              <td>1.26</td> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- <h1>Estimates between the years 1950 and 1980 (in thousands)</h1> -->
+</div>
